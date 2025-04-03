@@ -17,6 +17,7 @@ public class MyProgram
         String name = "";
         ArrayList<String> namearr = new ArrayList<String>();
         boolean done = false;
+        ArrayList<String> components = new ArrayList<String>();
         
     for (int i = 0; done == false; i++){    
         System.out.println();
@@ -26,13 +27,20 @@ public class MyProgram
         variable = t.nextLine();
         System.out.println("Enter exponent:");
         exponent = s.nextDouble();
+        
         System.out.println("Your function [f(x)]:");
         printFunction(number, variable, exponent);
         if (choice == 1){
-        System.out.println("Derivative [f'(x)]:");
+        System.out.println("Derivative [f'(x)]:4");
+        components.add(String.valueOf((number * exponent)));
+        components.add(variable);
+        components.add(String.valueOf(exponent - 1));
         namearr.add(powerrule(number, variable, exponent));
         } else if (choice == 2){
         System.out.println("Integration [F(x)]:");
+        components.add(String.valueOf((number * exponent)));
+        components.add(variable);
+        components.add(String.valueOf(exponent - 1));
         namearr.add(reversepowerrule(number, variable, exponent));
         }
         
@@ -51,7 +59,11 @@ public class MyProgram
             }
         }
         } else if (choice2 == 3){
+            System.out.println();
+            System.out.println("Enter value: ");
+            System.out.println();
             double assigned = s.nextDouble();
+            System.out.println(product(components, assigned));
             
         } else if (choice2 == 4){
             done = true;
@@ -61,18 +73,20 @@ public class MyProgram
     
     }
     
-    public static String product(ArrayList<String> namearr, String num){
-        for (int z = 0; z < namearr.size(); z++){
-            String rebuilder = namearr.get(z);
-           for (int k = 0; k < rebuilder.length(); k++){
-            String r = rebuilder.substring(k, k+1);
-            if (r.equals("a") || r.equals("b") || r.equals("c") || r.equals("d")){
-                r = num;
-            }
-            }
+    public static int product(ArrayList<String> grah, double num){
+        
+        int total = 0;
+        
+        for (int k = 0; k < grah.size(); k += 3){
+            double replace1 = Double.parseDouble(grah.get(k));
+            double replace3 = Double.parseDouble(grah.get(k + 2));
+            double replace2 = Math.pow(num, replace3);
+            
+            total += replace1 * replace2;
+            
         }
         
-        return "In-Progress";
+        return total;
     }
     
     public static String printFunction(double n, String v, double e){
@@ -92,6 +106,7 @@ public class MyProgram
         return n + "" + v + "^" + e;
         }
         }
+        
     }
     
     public static String powerrule(double n, String v, double e){
